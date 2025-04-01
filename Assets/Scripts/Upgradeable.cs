@@ -12,7 +12,6 @@ public class Upgradeable : MonoBehaviour
     {
         CanvasObj = MatsNeededSpace.transform.root.Find("Canvas").gameObject;
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
@@ -31,7 +30,7 @@ public class Upgradeable : MonoBehaviour
             isActive=false;
         }
     }
-    // Update is called once per frame
+    
     void Update()
     {
         CanvasObj.SetActive(isActive);
