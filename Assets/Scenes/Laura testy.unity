@@ -705,7 +705,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 2
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 28
       m_TileMatrixIndex: 7
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1422,8 +1422,8 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 4
     m_Data: {fileID: 1196784286, guid: 7bfbad2f361d8334db4869decd8ef373, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -147451067, guid: 7bfbad2f361d8334db4869decd8ef373, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 4
     m_Data: {fileID: 1318565393, guid: 7bfbad2f361d8334db4869decd8ef373, type: 3}
   - m_RefCount: 2
@@ -1476,8 +1476,8 @@ Tilemap:
     m_Data: {fileID: -352770914, guid: 7bfbad2f361d8334db4869decd8ef373, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: -1805008337, guid: 7bfbad2f361d8334db4869decd8ef373, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -147451067, guid: 7bfbad2f361d8334db4869decd8ef373, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1104977592, guid: 7bfbad2f361d8334db4869decd8ef373, type: 3}
   - m_RefCount: 1
@@ -1581,9 +1581,9 @@ Tilemap:
       e03: 0
       e10: -0.99999994
       e11: 0.000000059604645
-      e12: 0
+      e12: -0
       e13: 0
-      e20: 0
+      e20: -0
       e21: 0
       e22: 1
       e23: 0
@@ -1633,11 +1633,11 @@ Tilemap:
       e01: 0
       e02: 0
       e03: 0
-      e10: 0
+      e10: -0
       e11: 1
       e12: 0
       e13: 0
-      e20: 0
+      e20: -0
       e21: 0
       e22: 1
       e23: 0
@@ -1756,6 +1756,18 @@ MonoBehaviour:
   deathLimit: 3
   tilemap: {fileID: 730404931}
   tile: {fileID: 11400000, guid: 1371652f106414f4bb60ecd62d06f609, type: 2}
+  depthLayers:
+  - minDepth: 0
+    maxDepth: 100
+    layerTile: {fileID: 11400000, guid: a163648374c75bf42b2b8fbc4413ff76, type: 2}
+  - minDepth: 100
+    maxDepth: 150
+    layerTile: {fileID: 11400000, guid: 96dec9ec5e6b2cd4eb91e0bc0f0f4e7b, type: 2}
+  - minDepth: 150
+    maxDepth: 200
+    layerTile: {fileID: 11400000, guid: 1371652f106414f4bb60ecd62d06f609, type: 2}
+  jaggedness: 5
+  jaggedScale: 0.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

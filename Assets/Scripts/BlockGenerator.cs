@@ -2,6 +2,16 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEditor.PlayerSettings;
 
+
+[System.Serializable]
+public class DepthLayer
+{
+    public int minDepth;
+    public int maxDepth;
+    public RuleTile layerTile;
+}
+
+
 public class BlockGenerator : MonoBehaviour
 {
     [Header("Generator settings")]
@@ -13,6 +23,13 @@ public class BlockGenerator : MonoBehaviour
     [Header("Tile i tilemapa")]
     [SerializeField] Tilemap tilemap;
     [SerializeField] RuleTile tile;
+
+    [SerializeField] DepthLayer[] depthLayers;
+
+
+    [Header("Transitions")]
+    public float jaggedness = 5f;
+    public float jaggedScale = 0.1f;
 
     private int[,] map;
 
@@ -79,6 +96,23 @@ public class BlockGenerator : MonoBehaviour
         }
         return count;
     }
+    float GetJaggedThreshold(int x, int baseDepth)
+    {
+        float noise = Mathf.PerlinNoise(x * jaggedScale, baseDepth * 0.1f) - 0.5f;
+        return baseDepth + noise * jaggedness;
+    }
+    DepthLayer GetLayerForDepth(int x, int y)
+    {
+        foreach (var layer in depthLayers)
+        {
+            int minTh = Mathf.FloorToInt(GetJaggedThreshold(x, layer.minDepth));
+            int maxTh = Mathf.CeilToInt(GetJaggedThreshold(x, layer.maxDepth));
+            if (y >= minTh && y <= maxTh)
+                return layer;
+        }
+        return null;
+    }
+
     void DrawMap()
     {
         tilemap.ClearAllTiles();
@@ -86,9 +120,15 @@ public class BlockGenerator : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                Vector3Int pos = new Vector3Int(x, y, 0);
-                if (map[x, y] == 1) tilemap.SetTile(pos, tile);
+                if (map[x, y] == 1)
+                {
+                    Vector3Int pos = new Vector3Int(x, y, 0);
+                    var layer = GetLayerForDepth(x, y);
+                    if (layer != null)
+                        tilemap.SetTile(pos, layer.layerTile);
+                }
             }
         }
     }
+
 }
