@@ -1766,8 +1766,8 @@ MonoBehaviour:
   - minDepth: 150
     maxDepth: 200
     layerTile: {fileID: 11400000, guid: 1371652f106414f4bb60ecd62d06f609, type: 2}
-  jaggedness: 5
-  jaggedScale: 0.1
+  jaggedness: 20
+  jaggedScale: 0.05
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
