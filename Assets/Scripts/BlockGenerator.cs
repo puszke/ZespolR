@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEditor.PlayerSettings;
@@ -9,6 +10,17 @@ public class DepthLayer
     public int minDepth;
     public int maxDepth;
     public RuleTile layerTile;
+}
+
+[System.Serializable]
+public class oreType
+{
+    public string name;
+    public RuleTile tile;
+    public int clusters;
+    public int clusterSize;
+    public float branchChance;
+    public int minDepth, maxDepth;
 }
 
 
@@ -30,6 +42,11 @@ public class BlockGenerator : MonoBehaviour
     [Header("Transitions")]
     public float jaggedness = 5f;
     public float jaggedScale = 0.1f;
+
+    [Header("Ore settings")]
+    [SerializeField] private Tilemap oreTilemap;
+    [SerializeField] private oreType[] oreTypes;
+    private bool[,] oreGrid;
 
     private int[,] map;
 
@@ -116,6 +133,7 @@ public class BlockGenerator : MonoBehaviour
     void DrawMap()
     {
         tilemap.ClearAllTiles();
+        oreTilemap.ClearAllTiles();
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -129,6 +147,71 @@ public class BlockGenerator : MonoBehaviour
                 }
             }
         }
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                if (oreGrid != null && oreGrid[x, y])
+                {
+                    var pos = new Vector3Int(x, y, 0);
+                    // finds ore by type
+                    foreach (var ore in oreTypes)
+                        if (y >= ore.minDepth && y <= ore.maxDepth)
+                            oreTilemap.SetTile(pos, ore.tile);
+                }
     }
+
+    #region Ores
+    void GenerateOres()
+    {
+        // Picks random starting point for the walkers
+        oreGrid = new bool[width, height];
+        foreach (var ore in oreTypes)
+        {
+            for (int c = 0; c < ore.clusters; c++)
+            {
+                int x = Random.Range(0, width);
+                int y = Random.Range(0, height);
+                if (map[x,y] != 1)
+                {
+                    c--;
+                    continue;
+                }
+
+                // Creates walkers
+                List<Vector2Int> walkers = new List<Vector2Int> { new Vector2Int(x, y) };
+
+                int steps = ore.clusterSize;
+                int maxBranches = Mathf.CeilToInt(ore.branchChance * steps);
+
+                while (steps-- > 0 && walkers.Count > 0)
+                {
+                    // Picks random walker
+                    int i = Random.Range(0, walkers.Count);
+                    var pos = walkers[i];
+                    oreGrid[pos.x, pos.y] = true;
+
+                    // Branching of walker
+                    if(Random.value > ore.branchChance && walkers.Count < maxBranches)
+                    {
+                        walkers.Add(pos);
+                    }
+
+                    // Random movement
+                    Vector2Int[] directions = {Vector2Int.down, Vector2Int.up, Vector2Int.left, Vector2Int.right};
+                    var dir = directions[Random.Range(0, directions.Length)];
+                    var np = pos + dir;
+
+                    // Check if out of bounds
+                    if (np.x >= width || np.x < 0 || np.y >= height || np.y > 0 || map[np.x,np.y] != 1)
+                    {
+                        walkers.RemoveAt(i);
+                        continue;
+                    }
+                    walkers[i] = np;
+                }
+            }    
+        }
+    }
+
+    #endregion
 
 }
