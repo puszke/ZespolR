@@ -1894,15 +1894,43 @@ MonoBehaviour:
   jaggedScale: 0.05
   oreTilemap: {fileID: 797583991}
   oreTypes:
-  - name: 
-    tile: {fileID: 0}
+  - name: Copper
+    tile: {fileID: 11400000, guid: b7e416b8587b5d341bb8dde337b9edda, type: 2}
+    clusters: 5
+    clusterSize: 7
+    branchChance: 4
+    minDepth: 100
+    maxDepth: 195
+  - name: Coal
+    tile: {fileID: 11400000, guid: 5930c51631718d24e9405fe3a6767a8f, type: 2}
+    clusters: 40
+    clusterSize: 10
+    branchChance: 10
+    minDepth: 123
+    maxDepth: 185
+  - name: Iron
+    tile: {fileID: 11400000, guid: ed9e29dc7b3a90248b4df656cea17ed8, type: 2}
     clusters: 0
     clusterSize: 0
     branchChance: 0
     minDepth: 0
     maxDepth: 0
-  - name: 
-    tile: {fileID: 0}
+  - name: Gold
+    tile: {fileID: 11400000, guid: 05ce9420abbaa6048bd52fa4a143834c, type: 2}
+    clusters: 0
+    clusterSize: 0
+    branchChance: 0
+    minDepth: 0
+    maxDepth: 0
+  - name: Diamond
+    tile: {fileID: 11400000, guid: 3d26694562b26964f9e2aca14ed9db22, type: 2}
+    clusters: 0
+    clusterSize: 0
+    branchChance: 0
+    minDepth: 0
+    maxDepth: 0
+  - name: Emerald
+    tile: {fileID: 11400000, guid: 65546c65f9c9a244e807f7575eb8d47b, type: 2}
     clusters: 0
     clusterSize: 0
     branchChance: 0

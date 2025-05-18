@@ -19,7 +19,7 @@ public class oreType
     public RuleTile tile;
     public int clusters;
     public int clusterSize;
-    public float branchChance;
+    [Range(0f, 1f)] public float branchChance;
     public int minDepth, maxDepth;
 }
 
@@ -53,6 +53,7 @@ public class BlockGenerator : MonoBehaviour
     private void Start()
     {
         Generate();
+        GenerateOres();
         DrawMap();
     }
     public void Generate()
@@ -190,7 +191,7 @@ public class BlockGenerator : MonoBehaviour
                     oreGrid[pos.x, pos.y] = true;
 
                     // Branching of walker
-                    if(Random.value > ore.branchChance && walkers.Count < maxBranches)
+                    if(Random.value < ore.branchChance && walkers.Count < maxBranches)
                     {
                         walkers.Add(pos);
                     }
@@ -201,7 +202,7 @@ public class BlockGenerator : MonoBehaviour
                     var np = pos + dir;
 
                     // Check if out of bounds
-                    if (np.x >= width || np.x < 0 || np.y >= height || np.y > 0 || map[np.x,np.y] != 1)
+                    if (np.x >= width || np.x < 0 || np.y >= height || np.y < 0 || map[np.x,np.y] != 1)
                     {
                         walkers.RemoveAt(i);
                         continue;
