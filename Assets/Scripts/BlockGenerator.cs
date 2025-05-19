@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEditor.PlayerSettings;
@@ -46,7 +47,7 @@ public class BlockGenerator : MonoBehaviour
     [Header("Ore settings")]
     [SerializeField] private Tilemap oreTilemap;
     [SerializeField] private oreType[] oreTypes;
-    private bool[,] oreGrid;
+    private int[,] oreGrid;
 
     private int[,] map;
 
@@ -155,13 +156,19 @@ public class BlockGenerator : MonoBehaviour
         }
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
-                if (oreGrid != null && oreGrid[x, y])
+                if (oreGrid != null && oreGrid[x, y] != 0)
                 {
                     var pos = new Vector3Int(x, y, 0);
                     // finds ore by type
+                    int i = 0;
                     foreach (var ore in oreTypes)
-                        if (y >= ore.minDepth && y <= ore.maxDepth)
+                    {
+                        i++;
+                        if (oreGrid[x, y] == i)
+                        {
                             oreTilemap.SetTile(pos, ore.tile);
+                        }
+                    }
                 }
     }
 
@@ -169,14 +176,16 @@ public class BlockGenerator : MonoBehaviour
     void GenerateOres()
     {
         // Picks random starting point for the walkers
-        oreGrid = new bool[width, height];
+        oreGrid = new int[width, height];
+        int o = 0;
         foreach (var ore in oreTypes)
         {
+            o++;
             for (int c = 0; c < ore.clusters; c++)
             {
                 int x = Random.Range(0, width);
                 int y = Random.Range(0, height);
-                if (map[x,y] != 1)
+                if (map[x,y] != 1 || y > ore.maxDepth || y < ore.minDepth)
                 {
                     c--;
                     continue;
@@ -193,7 +202,7 @@ public class BlockGenerator : MonoBehaviour
                     // Picks random walker
                     int i = Random.Range(0, walkers.Count);
                     var pos = walkers[i];
-                    oreGrid[pos.x, pos.y] = true;
+                    oreGrid[pos.x, pos.y] = o;
 
                     // Branching of walker
                     if(Random.value < ore.branchChance && walkers.Count < maxBranches)
@@ -207,7 +216,7 @@ public class BlockGenerator : MonoBehaviour
                     var np = pos + dir;
 
                     // Check if out of bounds
-                    if (np.x >= width || np.x < 0 || np.y >= height || np.y < 0 || map[np.x,np.y] != 1)
+                    if (np.x >= width || np.x < 0 || np.y >= height || np.y < 0 || map[np.x,np.y] != 1 || np.y > ore.maxDepth || np.y < ore.minDepth)
                     {
                         walkers.RemoveAt(i);
                         continue;
