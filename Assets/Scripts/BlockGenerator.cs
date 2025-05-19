@@ -63,6 +63,11 @@ public class BlockGenerator : MonoBehaviour
         {
             map = DoSimulationStep(map);
         }
+        // Ensures that bottom-most layer is without gaps
+        for (int x = 0; x < width; x++)
+        {
+            map[x, 0] = 1;
+        }
     }
 
     private void InitMap()
@@ -70,7 +75,7 @@ public class BlockGenerator : MonoBehaviour
         map = new int [width, height];
         for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 1; y < height; y++)
             {
                 map[x, y] = (Random.value < fillProb) ? 1 : 0;
             }
