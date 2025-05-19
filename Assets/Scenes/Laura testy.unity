@@ -1881,61 +1881,73 @@ MonoBehaviour:
   tilemap: {fileID: 730404931}
   tile: {fileID: 11400000, guid: 1371652f106414f4bb60ecd62d06f609, type: 2}
   depthLayers:
-  - minDepth: 0
-    maxDepth: 100
-    layerTile: {fileID: 11400000, guid: a163648374c75bf42b2b8fbc4413ff76, type: 2}
-  - minDepth: 100
+  - minDepth: 150
+    maxDepth: 256
+    layerTile: {fileID: 11400000, guid: 1371652f106414f4bb60ecd62d06f609, type: 2}
+  - minDepth: 130
     maxDepth: 150
     layerTile: {fileID: 11400000, guid: 96dec9ec5e6b2cd4eb91e0bc0f0f4e7b, type: 2}
-  - minDepth: 150
-    maxDepth: 200
-    layerTile: {fileID: 11400000, guid: 1371652f106414f4bb60ecd62d06f609, type: 2}
+  - minDepth: 100
+    maxDepth: 130
+    layerTile: {fileID: 11400000, guid: a163648374c75bf42b2b8fbc4413ff76, type: 2}
+  - minDepth: 85
+    maxDepth: 100
+    layerTile: {fileID: 11400000, guid: 2b09a16553ae96444a9414eab534059d, type: 2}
+  - minDepth: 35
+    maxDepth: 85
+    layerTile: {fileID: 11400000, guid: 8af55d74a6b5cbd43adc15a994fc2f12, type: 2}
+  - minDepth: 5
+    maxDepth: 35
+    layerTile: {fileID: 11400000, guid: fbae5b46745aced40ba405ceb5300065, type: 2}
+  - minDepth: -256
+    maxDepth: 5
+    layerTile: {fileID: 11400000, guid: 45f7e59c8acd0e449bd4f532720b5a3e, type: 2}
   jaggedness: 20
-  jaggedScale: 0.05
+  jaggedScale: 0.04
   oreTilemap: {fileID: 797583991}
   oreTypes:
-  - name: Copper
-    tile: {fileID: 11400000, guid: b7e416b8587b5d341bb8dde337b9edda, type: 2}
-    clusters: 5
-    clusterSize: 7
-    branchChance: 4
-    minDepth: 100
-    maxDepth: 195
   - name: Coal
     tile: {fileID: 11400000, guid: 5930c51631718d24e9405fe3a6767a8f, type: 2}
-    clusters: 40
-    clusterSize: 10
-    branchChance: 10
+    clusters: 30
+    clusterSize: 60
+    branchChance: 0.05
     minDepth: 123
-    maxDepth: 185
+    maxDepth: 195
+  - name: Copper
+    tile: {fileID: 11400000, guid: b7e416b8587b5d341bb8dde337b9edda, type: 2}
+    clusters: 40
+    clusterSize: 65
+    branchChance: 0.1
+    minDepth: 100
+    maxDepth: 183
   - name: Iron
     tile: {fileID: 11400000, guid: ed9e29dc7b3a90248b4df656cea17ed8, type: 2}
-    clusters: 0
-    clusterSize: 0
-    branchChance: 0
-    minDepth: 0
-    maxDepth: 0
+    clusters: 30
+    clusterSize: 50
+    branchChance: 0.2
+    minDepth: 80
+    maxDepth: 130
   - name: Gold
     tile: {fileID: 11400000, guid: 05ce9420abbaa6048bd52fa4a143834c, type: 2}
-    clusters: 0
-    clusterSize: 0
-    branchChance: 0
-    minDepth: 0
-    maxDepth: 0
+    clusters: 25
+    clusterSize: 40
+    branchChance: 0.3
+    minDepth: 50
+    maxDepth: 130
   - name: Diamond
     tile: {fileID: 11400000, guid: 3d26694562b26964f9e2aca14ed9db22, type: 2}
-    clusters: 0
-    clusterSize: 0
-    branchChance: 0
-    minDepth: 0
-    maxDepth: 0
+    clusters: 12
+    clusterSize: 12
+    branchChance: 0.35
+    minDepth: 11
+    maxDepth: 64
   - name: Emerald
     tile: {fileID: 11400000, guid: 65546c65f9c9a244e807f7575eb8d47b, type: 2}
-    clusters: 0
-    clusterSize: 0
-    branchChance: 0
-    minDepth: 0
-    maxDepth: 0
+    clusters: 6
+    clusterSize: 8
+    branchChance: 0.4
+    minDepth: 18
+    maxDepth: 36
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

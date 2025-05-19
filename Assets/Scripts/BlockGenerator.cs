@@ -121,15 +121,15 @@ public class BlockGenerator : MonoBehaviour
     }
     float GetJaggedThreshold(int x, int baseDepth)
     {
-        float noise = Mathf.PerlinNoise(x * jaggedScale, baseDepth * 0.1f) - 0.5f;
+        float noise = Mathf.PerlinNoise(x * jaggedScale, baseDepth * 0.1f) - 0.0f;
         return baseDepth + noise * jaggedness;
     }
     DepthLayer GetLayerForDepth(int x, int y)
     {
         foreach (var layer in depthLayers)
         {
-            int minTh = Mathf.FloorToInt(GetJaggedThreshold(x, layer.minDepth));
-            int maxTh = Mathf.CeilToInt(GetJaggedThreshold(x, layer.maxDepth));
+            int minTh = Mathf.CeilToInt(GetJaggedThreshold(x, layer.minDepth));
+            int maxTh = Mathf.FloorToInt(GetJaggedThreshold(x, layer.maxDepth));
             if (y >= minTh && y <= maxTh)
                 return layer;
         }
