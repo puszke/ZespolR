@@ -1,4 +1,5 @@
-using Unity.VisualScripting;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Upgradeable : MonoBehaviour
@@ -8,6 +9,22 @@ public class Upgradeable : MonoBehaviour
     private GameObject CanvasObj;
 
     private bool isActive=false;
+
+    public List<LevelReq> levels;
+
+    [Serializable]
+    public class MatNeeded
+    {
+        public string name = "COPPER";
+        public int amount = 99;
+    }
+
+    [Serializable]
+    public class LevelReq
+    {
+        public List<MatNeeded> requiredOres;
+    }
+
     void Awake()
     {
         CanvasObj = MatsNeededSpace.transform.root.Find("Canvas").gameObject;
