@@ -12,18 +12,23 @@ public class PlayerStats : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(PlayerPrefs.GetInt("StartedTheGame")==0)
-            ResetPlayerStats();
+        PlayerPrefs.SetInt("StartedTheGame", 0);//<- USUN TO PRZED WYPUSZCZENIEM GRY BO UMRZESZ
+
+        if (PlayerPrefs.GetInt("StartedTheGame") == 0)
+        {
+            PlayerPrefs.DeleteAll();
+            ResetPlayerStats(100);
+        }
     }
 
-    void ResetPlayerStats()
+    void ResetPlayerStats(int nums)
     {
-        PlayerPrefs.SetInt("COPPER", 0);
-        PlayerPrefs.SetInt("COAL", 0);
-        PlayerPrefs.SetInt("IRON", 0);
-        PlayerPrefs.SetInt("GOLD", 0);
-        PlayerPrefs.SetInt("EMERALDS", 0);
-        PlayerPrefs.SetInt("DIAMONDS", 0);
+        PlayerPrefs.SetInt("COPPER", nums);
+        PlayerPrefs.SetInt("COAL", nums);
+        PlayerPrefs.SetInt("IRON", nums);
+        PlayerPrefs.SetInt("GOLD", nums);
+        PlayerPrefs.SetInt("EMERALDS", nums);
+        PlayerPrefs.SetInt("DIAMONDS", nums);
 
         PlayerPrefs.SetInt("StartedTheGame", 1);
 

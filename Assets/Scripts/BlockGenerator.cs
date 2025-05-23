@@ -57,6 +57,8 @@ public class BlockGenerator : MonoBehaviour
         GenerateOres();
         DrawMap();
     }
+
+
     public void Generate()
     {
         InitMap();
