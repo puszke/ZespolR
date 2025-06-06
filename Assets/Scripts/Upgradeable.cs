@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,6 +9,16 @@ public class Upgradeable : MonoBehaviour
     private GameObject CanvasObj;
 
     private bool isActive=false;
+
+    public List<MaterialNeeded> materialsNeeded;
+
+
+    [System.Serializable]
+    public class MaterialNeeded
+    {
+        public string name;
+        public int amount = 0;
+    }
     void Awake()
     {
         CanvasObj = MatsNeededSpace.transform.root.Find("Canvas").gameObject;
@@ -34,5 +45,20 @@ public class Upgradeable : MonoBehaviour
     void Update()
     {
         CanvasObj.SetActive(isActive);
+        if(isActive)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                bool canUpgrade = false;
+                foreach(MaterialNeeded mat in materialsNeeded)
+                {
+                    if(PlayerPrefs.GetInt(mat.name)>=mat.amount)
+                    {
+                        
+                        //canUpgrade = true;
+                    }
+                }
+            }
+        }
     }
 }
