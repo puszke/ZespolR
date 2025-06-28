@@ -7,6 +7,7 @@ public class MouseMovementInCave : MonoBehaviour
     private Animator animator;
     [SerializeField] private SpriteRenderer _spr;
     public float maxSpeed = 10;
+    public float speed = 10;
     public float jumpForce = 10;
 
     bool canJump = false;
@@ -28,12 +29,12 @@ public class MouseMovementInCave : MonoBehaviour
         canJump = true;
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");
 
         if(rb2d.linearVelocity.x<maxSpeed)
-            rb2d.AddForce(new Vector3(x, 0, 0), ForceMode2D.Force);
+            rb2d.AddForce(new Vector3(x*speed, 0, 0), ForceMode2D.Force);
 
         if(Input.GetKeyDown(KeyCode.Space)&&canJump)
         {
