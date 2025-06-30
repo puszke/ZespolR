@@ -7,8 +7,8 @@ using UnityEngine.VFX;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField]
-    //private GameObject creditsSplash;
-    //private bool creditsScreenOn = false;
+    private GameObject creditsSplash;
+    private bool creditsScreenOn = false;
     private string EventPath = string.Empty;
     public void buttonHoverSFX()
     {
@@ -25,21 +25,20 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-    /*
     public void CredditsButtonPressed()
     {
         if (!creditsScreenOn)
         {
             creditsScreenOn = true;
-            creditsSplash.GetComponent<Animator>().SetTrigger("Credits On");
-        }
-        else
-        {
-            creditsScreenOn = false;
-            creditsSplash.GetComponent<Animator>().SetTrigger("Credits Off");
+            creditsSplash.GetComponent<Animator>().SetTrigger("Open");
         }
     }
-    */
+
+    public void CloseCredits()
+    {
+        creditsScreenOn = false;
+        creditsSplash.GetComponent<Animator>().SetTrigger("Close");
+    }
 
     public void ExitButtonPressed()
     {
