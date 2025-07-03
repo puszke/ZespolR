@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -10,8 +12,9 @@ public class Mining : MonoBehaviour
 
     float miningProgress = 0;
     float breakingProgress = 0;
-
+    [SerializeField] private string EventPath0 = "event:/Pickup";
     [SerializeField] private GameObject breaking, pix;
+    [SerializeField] private string EventPath1 = "event:/Destroy";
 
     Dictionary<string, string> oreMeaning = new Dictionary<string, string>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,6 +26,22 @@ public class Mining : MonoBehaviour
         oreMeaning.Add("Ore 4", "GOLD");
         oreMeaning.Add("Ore 5", "DIAMONDS");
         oreMeaning.Add("Ore 6", "EMERALDS");
+    }
+
+    void PlayOreBreakEvent()
+    {
+        EventInstance OreBreak = RuntimeManager.CreateInstance(EventPath0);
+        RuntimeManager.AttachInstanceToGameObject(OreBreak, gameObject, GetComponent<Rigidbody2D>());
+        OreBreak.start();
+        OreBreak.release();
+    }
+
+    void PlayBreakEvent()
+    {
+        EventInstance Break = RuntimeManager.CreateInstance(EventPath1);
+        RuntimeManager.AttachInstanceToGameObject(Break, gameObject, GetComponent<Rigidbody2D>());
+        Break.start();
+        Break.release();
     }
 
     // Update is called once per frame
@@ -75,10 +94,12 @@ public class Mining : MonoBehaviour
                                 {
                                     Debug.Log("Wykopano " + oreTile.name + " na pozycji " + pos);
                                     PlayerPrefs.SetInt(oreMeaning[oreTile.name], PlayerPrefs.GetInt(oreMeaning[oreTile.name])+1);
+                                    PlayOreBreakEvent();
                                 }
                                 breaking.GetComponent<CaveBreaking>().ResetBreaking();
                                 tilemapMaterials.SetTile(pos, null);
                                 tilemap.SetTile(pos, null);
+                                PlayBreakEvent();
                                 miningProgress = 0;
                             }
                         }
