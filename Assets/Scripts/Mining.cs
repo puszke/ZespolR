@@ -17,9 +17,26 @@ public class Mining : MonoBehaviour
     [SerializeField] private string EventPath1 = "event:/Destroy";
 
     Dictionary<string, string> oreMeaning = new Dictionary<string, string>();
+
+
+    public GameObject moonParticle;
+    public List<GameObject> particles;
+    private int particleInd = 0;
+    private int particleCount = 10;
+
+    private Vector3 last;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
+        for(int i = 0; i < particleCount; i++)
+        {
+            GameObject b = Instantiate(moonParticle);
+            b.SetActive(false);
+            particles.Add(b);
+        }
+
         oreMeaning.Add("Ore 2", "COAL");
         oreMeaning.Add("Ore 1", "COPPER");
         oreMeaning.Add("Ore 3", "IRON");
@@ -43,11 +60,22 @@ public class Mining : MonoBehaviour
         Break.start();
         Break.release();
     }
-
+    void SpawnParticle(Vector3 pos)
+    {
+        particles[particleInd].SetActive(false);
+        particles[particleInd].SetActive(true);
+        particles[particleInd].transform.position = pos;
+        particleInd++;
+        if(particleInd >= particles.Count )
+        {
+            particleInd = 0;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         pix.GetComponent<Animator>().SetBool("Mining", Input.GetMouseButton(0));
+       
         // Przyk³ad: usuwanie kafelka pod kursorem myszy
         if (Input.GetMouseButton(0))
         {
@@ -66,41 +94,56 @@ public class Mining : MonoBehaviour
                     // Liczymy dystans od œrodka do tego pola
                     float dist = Vector2.Distance(new Vector2(center.x, center.y), new Vector2(pos.x, pos.y));
 
+
+                    
                     if (dist <= radius)
                     {
                         TileBase tile = tilemap.GetTile(pos);
                         TileBase oreTile = tilemapMaterials.GetTile(pos);
+
+                       
+
                         if (tile != null)
                         {
-                            float miningTime = 2;
-                            float nextBreak = miningTime / 5;
-
-                            breakingProgress += Time.deltaTime;
-                            miningProgress += Time.deltaTime;
-
-
-                            breaking.transform.position = tilemap.CellToWorld(pos) + new Vector3(0.4f, 0.4f, 0);
-                            
-
-                            if(breakingProgress>=nextBreak)
+                            if (last == tilemap.CellToWorld(pos))
                             {
-                                breaking.GetComponent<CaveBreaking>().ChangeSprite();
-                                breakingProgress = 0;
-                            }
+                                float miningTime = 2 - PlayerPrefs.GetInt("Workshop") / 2;
+                                float nextBreak = miningTime / 5;
 
-                            if (miningProgress > miningTime)
-                            {
-                                if (oreTile != null)
+                                breakingProgress += Time.deltaTime;
+                                miningProgress += Time.deltaTime;
+
+
+                                breaking.transform.position = tilemap.CellToWorld(pos) + new Vector3(0.4f, 0.4f, 0);
+
+
+                                if (breakingProgress >= nextBreak)
                                 {
-                                    Debug.Log("Wykopano " + oreTile.name + " na pozycji " + pos);
-                                    PlayerPrefs.SetInt(oreMeaning[oreTile.name], PlayerPrefs.GetInt(oreMeaning[oreTile.name])+1);
-                                    PlayOreBreakEvent();
+                                    breaking.GetComponent<CaveBreaking>().ChangeSprite();
+                                    breakingProgress = 0;
                                 }
-                                breaking.GetComponent<CaveBreaking>().ResetBreaking();
-                                tilemapMaterials.SetTile(pos, null);
-                                tilemap.SetTile(pos, null);
-                                PlayBreakEvent();
+
+                                if (miningProgress > miningTime)
+                                {
+                                    if (oreTile != null)
+                                    {
+                                        Debug.Log("Wykopano " + oreTile.name + " na pozycji " + pos);
+                                        PlayerPrefs.SetInt(oreMeaning[oreTile.name], PlayerPrefs.GetInt(oreMeaning[oreTile.name]) + (1+1*PlayerPrefs.GetInt("Ores")));
+                                        //PlayOreBreakEvent();
+                                    }
+                                    SpawnParticle(tilemap.CellToWorld(pos) + new Vector3(0.4f, 0.4f, 0));
+                                    breaking.GetComponent<CaveBreaking>().ResetBreaking();
+                                    tilemapMaterials.SetTile(pos, null);
+                                    tilemap.SetTile(pos, null);
+                                    PlayBreakEvent();
+                                    miningProgress = 0;
+                                }
+                            }
+                            else
+                            {
                                 miningProgress = 0;
+                                breaking.GetComponent<CaveBreaking>().ResetBreaking();
+                                last = tilemap.CellToWorld(pos);
                             }
                         }
                     }

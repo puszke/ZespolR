@@ -19,7 +19,7 @@ public class BackgroundCharacter : MonoBehaviour
     float target_x;
     IEnumerator FindPlace()
     {
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(Random.Range(3,8));
         ChooseVector();
         StartCoroutine(FindPlace());
     }

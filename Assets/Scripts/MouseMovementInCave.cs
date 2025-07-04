@@ -24,6 +24,14 @@ public class MouseMovementInCave : MonoBehaviour
     {
         
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && canJump)
+        {
+            canJump = false;
+            rb2d.AddForce(new Vector3(0, jumpForce, 0), ForceMode2D.Impulse);
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         canJump = true;
@@ -36,11 +44,7 @@ public class MouseMovementInCave : MonoBehaviour
         if(rb2d.linearVelocity.x<maxSpeed)
             rb2d.AddForce(new Vector3(x*speed, 0, 0), ForceMode2D.Force);
 
-        if(Input.GetKeyDown(KeyCode.Space)&&canJump)
-        {
-            canJump=false;
-            rb2d.AddForce(new Vector3(0, jumpForce, 0),ForceMode2D.Impulse);
-        }
+        
 
         animator.SetBool("Move", x!=0);
 

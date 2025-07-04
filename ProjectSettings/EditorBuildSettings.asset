@@ -6,11 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 1bc31354c532a1842a5b662076074cfe
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/Scenes/Laura testy.unity
     guid: c254e99fe155a804c851aedb0eaa54ca
+  - enabled: 1
+    path: Assets/Scenes/Loading.unity
+    guid: ca4ac0859249f3c4ab75199af53d8752
+  - enabled: 1
+    path: Assets/Scenes/YouDied.unity
+    guid: 1f4cc6f107c782a4098b2588602d543f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

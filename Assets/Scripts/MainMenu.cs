@@ -23,7 +23,9 @@ public class MainMenu : MonoBehaviour
     //Buttons Pressed
     public void StartButtonPressed()
     {
-        SceneManager.LoadScene(1);
+        PlayerPrefs.SetString("SceneChange", "SampleScene");
+        SceneChanger.instance.SceneChange("Loading");
+        //SceneManager.LoadScene(1);
     }
     public void CredditsButtonPressed()
     {

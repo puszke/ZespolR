@@ -23,11 +23,11 @@ public class CaveBreaking : MonoBehaviour
     public void ChangeSprite()
     {
         transform.localScale = Vector3.one*2;
-        if (lastPos!=transform.position)
+        /*if (lastPos!=transform.position)
         {
             ResetBreaking();
         }
-        lastPos = transform.position;
+        lastPos = transform.position;*/
         indx++;
         if (indx > sprList.Count - 1)
         {

@@ -37,7 +37,8 @@ public class CaveEntrance : MonoBehaviour
 
         if(isPlayerTouching && Input.GetKeyDown(KeyCode.E))
         {
-            ChangeScene("Laura testy");
+            PlayerPrefs.SetString("SceneChange", "Laura testy");
+            ChangeScene("Loading");
         }
     }
 }

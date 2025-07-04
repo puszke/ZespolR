@@ -13,18 +13,23 @@ public class Upgradeable : MonoBehaviour
 
     public List<LevelReq> levels;
 
+    [SerializeField] SpriteRenderer rnd, rnd2;
+
 
     [Serializable]
     public class MatNeeded
     {
         public string name = "COPPER";
         public int amount = 99;
+
+        
     }
 
     [Serializable]
     public class LevelReq
     {
         public List<MatNeeded> requiredOres;
+        public Sprite look;
     }
 
     void Awake()
@@ -34,6 +39,13 @@ public class Upgradeable : MonoBehaviour
     void Start()
     {
         level = PlayerPrefs.GetInt(transform.name);
+        ShowSprite();
+    }
+
+    void ShowSprite()
+    {
+        rnd.sprite = levels[level].look;
+        rnd2.sprite = levels[level].look;
     }
 
     void ShowRequiredMaterials()
@@ -81,6 +93,7 @@ public class Upgradeable : MonoBehaviour
             PlayerPrefs.SetInt(transform.name, level);
             ShowRequiredMaterials();
         }
+        ShowSprite();
     }
 
     void OnTriggerEnter2D(Collider2D collider2D)

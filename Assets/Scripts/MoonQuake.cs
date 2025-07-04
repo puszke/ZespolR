@@ -10,7 +10,7 @@ public class MoonQuake : MonoBehaviour
 
     void Start()
     {
-        remainingTime = totalTime;
+        remainingTime = totalTime+PlayerPrefs.GetInt("Time")*100;
     }
 
     void Update()

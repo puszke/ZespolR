@@ -9,15 +9,14 @@ public class PlayerStats : MonoBehaviour
     //EMERALDS
     //DIAMONDS
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         PlayerPrefs.SetInt("StartedTheGame", 0);//<- USUN TO PRZED WYPUSZCZENIEM GRY BO UMRZESZ
 
         if (PlayerPrefs.GetInt("StartedTheGame") == 0)
         {
             PlayerPrefs.DeleteAll();
-            ResetPlayerStats(100);
+            ResetPlayerStats(1110);
         }
     }
 
@@ -29,6 +28,7 @@ public class PlayerStats : MonoBehaviour
         PlayerPrefs.SetInt("GOLD", nums);
         PlayerPrefs.SetInt("EMERALDS", nums);
         PlayerPrefs.SetInt("DIAMONDS", nums);
+        //PlayerPrefs.SetInt("MOUSES", nums);
 
         PlayerPrefs.SetInt("StartedTheGame", 1);
 
